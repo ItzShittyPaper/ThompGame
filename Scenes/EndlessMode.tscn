@@ -1,0 +1,156 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://crt_material.tres" type="Material" id=1]
+[ext_resource path="res://Scripts/EnemyNotifier.gd" type="Script" id=2]
+[ext_resource path="res://Scripts/Score.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Scripts/Spawner.gd" type="Script" id=5]
+[ext_resource path="res://Sounds/Thumper Soundtrack.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/New_Enemy.wav" type="AudioStream" id=7]
+[ext_resource path="res://Sprites/Font.tres" type="DynamicFontData" id=8]
+[ext_resource path="res://Scenes/EnemyTimer.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scenes/EnemyTimerActor.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=11]
+
+
+
+
+
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_size = 1
+outline_color = Color( 1, 1, 1, 0.945098 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="CameraTexture" id=2]
+camera_feed_id = 5
+
+[sub_resource type="Environment" id=3]
+background_mode = 4
+ambient_light_color = Color( 0.92549, 0.92549, 0.92549, 1 )
+ambient_light_energy = 7.11
+auto_exposure_scale = 0.73
+auto_exposure_min_luma = 0.0
+auto_exposure_max_luma = 0.73
+auto_exposure_speed = 0.01
+dof_blur_far_enabled = true
+dof_blur_far_distance = 1.0
+dof_blur_far_quality = 2
+glow_enabled = true
+glow_intensity = 0.06
+glow_strength = 1.49
+glow_bloom = 0.04
+glow_blend_mode = 0
+glow_hdr_threshold = 1.18
+glow_hdr_luminance_cap = 1.0
+glow_bicubic_upscale = true
+adjustment_enabled = true
+adjustment_brightness = 0.51
+adjustment_saturation = 4.79
+adjustment_color_correction = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+emission_shape = 1
+emission_sphere_radius = 128.0
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 126.44
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+angle_random = 1.0
+scale = 0.25
+
+[node name="Root_Spawner" type="Node2D"]
+script = ExtResource( 5 )
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="EnemyNotifiers" type="Node" parent="Controllers"]
+
+[node name="EnemyNotifier" type="AudioStreamPlayer" parent="Controllers/EnemyNotifiers"]
+stream = ExtResource( 7 )
+bus = "EnemyNotifier"
+script = ExtResource( 2 )
+
+[node name="EnemyTimerActor" parent="Controllers/EnemyNotifiers" instance=ExtResource( 10 )]
+
+[node name="ScoreCounter" type="Node" parent="Controllers"]
+
+[node name="ScoreTimer" type="Timer" parent="Controllers/ScoreCounter"]
+wait_time = 5.0
+autostart = true
+
+[node name="ScoreLabel" type="Label" parent="Controllers/ScoreCounter"]
+margin_right = 1280.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 0.945098 )
+text = "0"
+align = 1
+valign = 1
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemySpawner" type="Node2D" parent="Controllers"]
+
+[node name="EnemyTimer" parent="Controllers/EnemySpawner" instance=ExtResource( 9 )]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+current = true
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Camera2D"]
+environment = SubResource( 3 )
+
+[node name="SceneSetup" type="Node2D" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="SceneSetup"]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 32.5185, 19.7429 )
+color = Color( 0.0862745, 0.0862745, 0.0862745, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Particles2D" type="Particles2D" parent="SceneSetup"]
+position = Vector2( 653, 367 )
+scale = Vector2( 10, 10 )
+amount = 256
+lifetime = 0.5
+preprocess = 600.0
+speed_scale = 0.01
+randomness = 1.0
+draw_order = 1
+process_material = SubResource( 4 )
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+autoplay = true
+bus = "Music"
+
+[node name="Player" parent="." instance=ExtResource( 4 )]
+position = Vector2( 653, 367 )
+
+[node name="Enemy" parent="." instance=ExtResource( 11 )]
+position = Vector2( 354, 367 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+material = ExtResource( 1 )
+margin_right = 1280.0
+margin_bottom = 720.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="timeout" from="Controllers/EnemyNotifiers/EnemyTimerActor" to="Controllers/EnemyNotifiers/EnemyNotifier" method="_on_EnemyTimerActor_timeout"]
+[connection signal="timeout" from="Controllers/ScoreCounter/ScoreTimer" to="Controllers/ScoreCounter/ScoreLabel" method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="Controllers/EnemySpawner/EnemyTimer" to="." method="_on_EnemyTimer_timeout"]

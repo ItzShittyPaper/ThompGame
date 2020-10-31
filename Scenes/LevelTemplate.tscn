@@ -1,0 +1,78 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://Scenes/Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Enemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Sounds/Thumper Soundtrack.wav" type="AudioStream" id=3]
+[ext_resource path="res://Scripts/EnemyNotifier.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/EnemyTimerActor.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scripts/Spawner.gd" type="Script" id=6]
+[ext_resource path="res://Sounds/New_Enemy.wav" type="AudioStream" id=7]
+[ext_resource path="res://Scenes/EnemyTimer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Scenes/SceneSetup.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Scripts/Score.gd" type="Script" id=10]
+[ext_resource path="res://Sprites/Font.tres" type="DynamicFontData" id=11]
+
+
+
+
+
+
+
+[sub_resource type="DynamicFont" id=1]
+size = 48
+outline_size = 1
+outline_color = Color( 1, 1, 1, 0.945098 )
+font_data = ExtResource( 11 )
+
+[node name="Root_Spawner" type="Node2D"]
+script = ExtResource( 6 )
+
+[node name="Controllers" type="Node" parent="."]
+
+[node name="EnemyNotifiers" type="Node" parent="Controllers"]
+
+[node name="EnemyNotifier" type="AudioStreamPlayer" parent="Controllers/EnemyNotifiers"]
+stream = ExtResource( 7 )
+bus = "EnemyNotifier"
+script = ExtResource( 4 )
+
+[node name="EnemyTimerActor" parent="Controllers/EnemyNotifiers" instance=ExtResource( 5 )]
+
+[node name="ScoreCounter" type="Node" parent="Controllers"]
+
+[node name="ScoreTimer" type="Timer" parent="Controllers/ScoreCounter"]
+wait_time = 5.0
+autostart = true
+
+[node name="ScoreLabel" type="Label" parent="Controllers/ScoreCounter"]
+margin_right = 1280.0
+margin_bottom = 104.0
+custom_fonts/font = SubResource( 1 )
+custom_colors/font_color = Color( 1, 1, 1, 0.945098 )
+text = "0"
+align = 1
+valign = 1
+script = ExtResource( 10 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EnemySpawner" type="Node2D" parent="Controllers"]
+
+[node name="EnemyTimer" parent="Controllers/EnemySpawner" instance=ExtResource( 8 )]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="Controllers"]
+stream = ExtResource( 3 )
+autoplay = true
+bus = "Music"
+
+[node name="SceneSetup" parent="." instance=ExtResource( 9 )]
+
+[node name="Player" parent="." instance=ExtResource( 1 )]
+position = Vector2( 653, 367 )
+
+[node name="Enemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 354, 367 )
+[connection signal="timeout" from="Controllers/EnemyNotifiers/EnemyTimerActor" to="Controllers/EnemyNotifiers/EnemyNotifier" method="_on_EnemyTimerActor_timeout"]
+[connection signal="timeout" from="Controllers/ScoreCounter/ScoreTimer" to="Controllers/ScoreCounter/ScoreLabel" method="_on_ScoreTimer_timeout"]
+[connection signal="timeout" from="Controllers/EnemySpawner/EnemyTimer" to="." method="_on_EnemyTimer_timeout"]

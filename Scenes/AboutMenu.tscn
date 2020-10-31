@@ -1,0 +1,110 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sounds/Thumper Soundtrack.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sprites/Ubuntu-Light.ttf" type="DynamicFontData" id=2]
+[ext_resource path="res://Sprites/MainMenu-UI/MenuLogo_Text.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/player.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/MainMenu-UI/AttractMode.webm" type="VideoStream" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 24
+font_data = ExtResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="DynamicFont" id=7]
+size = 128
+font_data = ExtResource( 2 )
+
+[node name="Main Menu" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true
+bus = "MenuMusic"
+
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+stream = ExtResource( 7 )
+autoplay = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="Node2D" parent="."]
+
+[node name="MenuLogo_Text" type="Sprite" parent="Logo"]
+position = Vector2( 378, 96 )
+texture = ExtResource( 4 )
+
+[node name="player" type="Sprite" parent="Logo"]
+position = Vector2( 779, 99 )
+rotation = 2.09439
+scale = Vector2( 5.55207, 5.55207 )
+texture = ExtResource( 6 )
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+margin_left = 72.0
+margin_top = 240.0
+margin_right = 712.0
+margin_bottom = 560.0
+focus_mode = 2
+custom_fonts/normal_font = SubResource( 1 )
+tab_size = 24
+text = "Thumper is a game about, honestly i don't know. It was made by @M4kulatura in one week.
+He decided to post it on itch.io anyway. Feel free to play it!
+
+
+
+
+
+
+
+©M4kulatura Shitposting inc."
+fit_content_height = true
+scroll_following = true
+selection_enabled = true
+override_selected_font_color = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackButton" type="Button" parent="."]
+margin_left = 72.0
+margin_top = 638.0
+margin_right = 84.0
+margin_bottom = 658.0
+rect_scale = Vector2( 26.0773, 2.26489 )
+custom_styles/hover = SubResource( 2 )
+custom_styles/pressed = SubResource( 3 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = SubResource( 5 )
+custom_styles/normal = SubResource( 6 )
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://Scenes/MainMenu.tscn"
+
+[node name="Label" type="Label" parent="BackButton"]
+margin_left = -0.0383475
+margin_top = -3.5322
+margin_right = 776.962
+margin_bottom = 141.468
+rect_scale = Vector2( 0.0151891, 0.180689 )
+custom_fonts/font = SubResource( 7 )
+text = "Back to menu"
+__meta__ = {
+"_edit_use_anchors_": false
+}

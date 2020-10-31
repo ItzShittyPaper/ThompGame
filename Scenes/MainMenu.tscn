@@ -1,0 +1,238 @@
+[gd_scene load_steps=37 format=2]
+
+[ext_resource path="res://Sounds/Thumper Soundtrack.wav" type="AudioStream" id=1]
+[ext_resource path="res://Sprites/MainMenu-UI/Menu_Endless_Text.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/MainMenu-UI/Menu_Levels_Text.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/MainMenu-UI/MenuLogo_Text.png" type="Texture" id=4]
+[ext_resource path="res://Scripts/MenuButton.gd" type="Script" id=5]
+[ext_resource path="res://Sprites/player.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/MainMenu-UI/AttractMode.webm" type="VideoStream" id=7]
+[ext_resource path="res://Sprites/Ubuntu-Light.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Scripts/MenuExitButton.gd" type="Script" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="StyleBoxEmpty" id=3]
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=5]
+
+[sub_resource type="StyleBoxEmpty" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=7]
+
+[sub_resource type="StyleBoxEmpty" id=8]
+
+[sub_resource type="StyleBoxEmpty" id=9]
+
+[sub_resource type="StyleBoxEmpty" id=10]
+
+[sub_resource type="StyleBoxEmpty" id=11]
+
+[sub_resource type="StyleBoxEmpty" id=12]
+
+[sub_resource type="StyleBoxEmpty" id=13]
+
+[sub_resource type="StyleBoxEmpty" id=14]
+
+[sub_resource type="StyleBoxEmpty" id=15]
+
+[sub_resource type="DynamicFont" id=16]
+size = 128
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxEmpty" id=17]
+
+[sub_resource type="StyleBoxEmpty" id=18]
+
+[sub_resource type="StyleBoxEmpty" id=19]
+
+[sub_resource type="StyleBoxEmpty" id=20]
+
+[sub_resource type="DynamicFont" id=21]
+size = 128
+use_filter = true
+font_data = ExtResource( 8 )
+
+[sub_resource type="StyleBoxEmpty" id=22]
+
+[sub_resource type="StyleBoxEmpty" id=23]
+
+[sub_resource type="StyleBoxEmpty" id=24]
+
+[sub_resource type="StyleBoxEmpty" id=25]
+
+[sub_resource type="StyleBoxEmpty" id=26]
+
+[sub_resource type="DynamicFont" id=27]
+size = 128
+use_filter = true
+font_data = ExtResource( 8 )
+
+[node name="Main Menu" type="Node2D"]
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 1 )
+autoplay = true
+bus = "MenuMusic"
+
+[node name="VideoPlayer" type="VideoPlayer" parent="."]
+margin_right = 1280.0
+margin_bottom = 720.0
+stream = ExtResource( 7 )
+autoplay = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="Node2D" parent="."]
+
+[node name="MenuLogo_Text" type="Sprite" parent="Logo"]
+position = Vector2( 378, 96 )
+texture = ExtResource( 4 )
+
+[node name="player" type="Sprite" parent="Logo"]
+position = Vector2( 779, 99 )
+rotation = 2.09439
+scale = Vector2( 5.55207, 5.55207 )
+texture = ExtResource( 6 )
+
+[node name="EndlessButton" type="Button" parent="."]
+margin_left = 82.0
+margin_top = 236.0
+margin_right = 94.0
+margin_bottom = 256.0
+rect_scale = Vector2( 24.08, 3.6 )
+custom_styles/hover = SubResource( 1 )
+custom_styles/pressed = SubResource( 2 )
+custom_styles/focus = SubResource( 3 )
+custom_styles/disabled = SubResource( 4 )
+custom_styles/normal = SubResource( 5 )
+shortcut_in_tooltip = false
+action_mode = 0
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://Scenes/EndlessMode.tscn"
+
+[node name="Menu_Endless_Text" type="Sprite" parent="EndlessButton"]
+position = Vector2( 5.93854, 10 )
+scale = Vector2( 0.0286545, 0.191667 )
+texture = ExtResource( 2 )
+
+[node name="LevelsButton" type="Button" parent="."]
+margin_left = 76.0
+margin_top = 332.0
+margin_right = 88.0
+margin_bottom = 352.0
+rect_scale = Vector2( 20.72, 4.08 )
+custom_styles/hover = SubResource( 6 )
+custom_styles/pressed = SubResource( 7 )
+custom_styles/focus = SubResource( 8 )
+custom_styles/disabled = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://Scenes/LevelSelection.tscn"
+
+[node name="Menu_Levels_Text" type="Sprite" parent="LevelsButton"]
+position = Vector2( 5.98456, 9.80392 )
+scale = Vector2( 0.0333012, 0.169118 )
+texture = ExtResource( 3 )
+
+[node name="AboutButton" type="Button" parent="."]
+margin_left = 81.0
+margin_top = 439.0
+margin_right = 93.0
+margin_bottom = 459.0
+rect_scale = Vector2( 16.7429, 3.5 )
+custom_styles/hover = SubResource( 11 )
+custom_styles/pressed = SubResource( 12 )
+custom_styles/focus = SubResource( 13 )
+custom_styles/disabled = SubResource( 14 )
+custom_styles/normal = SubResource( 15 )
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://Scenes/AboutMenu.tscn"
+
+[node name="Label" type="Label" parent="AboutButton"]
+margin_left = 0.119453
+margin_top = -3.14287
+margin_right = 355.119
+margin_bottom = 141.857
+rect_scale = Vector2( 0.0340301, 0.158421 )
+custom_fonts/font = SubResource( 16 )
+text = "About"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsButton" type="Button" parent="."]
+margin_left = 74.0
+margin_top = 536.0
+margin_right = 86.0
+margin_bottom = 556.0
+rect_scale = Vector2( 21.4677, 3.56449 )
+custom_styles/hover = SubResource( 17 )
+custom_styles/pressed = SubResource( 18 )
+custom_styles/focus = SubResource( 19 )
+custom_styles/disabled = SubResource( 20 )
+flat = true
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+scene_to_load = "res://Scenes/OptionsMenu.tscn"
+
+[node name="Label" type="Label" parent="OptionsButton"]
+margin_left = -0.0931633
+margin_top = -1.68324
+margin_right = 456.907
+margin_bottom = 143.317
+rect_scale = Vector2( 0.0260258, 0.157714 )
+custom_fonts/font = SubResource( 21 )
+text = "Options"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ExitButton" type="Button" parent="."]
+margin_left = 72.0
+margin_top = 641.0
+margin_right = 84.0
+margin_bottom = 661.0
+rect_scale = Vector2( 11.5493, 3.44807 )
+custom_styles/hover = SubResource( 22 )
+custom_styles/pressed = SubResource( 23 )
+custom_styles/focus = SubResource( 24 )
+custom_styles/disabled = SubResource( 25 )
+custom_styles/normal = SubResource( 26 )
+flat = true
+script = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ExitButton"]
+margin_left = -0.432926
+margin_top = -4.64026
+margin_right = 214.567
+margin_bottom = 140.36
+rect_scale = Vector2( 0.051815, 0.167457 )
+custom_fonts/font = SubResource( 27 )
+text = "Exit"
+__meta__ = {
+"_edit_use_anchors_": false
+}
